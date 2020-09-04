@@ -7,21 +7,52 @@ class DB{
         this.connection = connection;
     }
 
-    viewAllTitles(){
+    viewAllEmployees(){
+        return this.connection.query(
+        `
+        SELECT 
+            employee.id AS id,
+            employee.first_name AS FirstName,
+            employee.last_name AS LastName,
+            role.title AS Title,
+            department.name AS Department,
+            role.salary AS Salary
+        FROM
+            ((employee
+        INNER JOIN role 
+            ON employee.role_id = role.id) 
+        INNER JOIN department 
+            ON role.department_id = department.id)
+        ORDER BY employee.id;
+        `
+        );
+    }
+
+    viewAllRoles(){
         return this.connection.query(
             `
             SELECT 
-                title.id,
-                title.name AS Title,
-                title.salary AS Salary,
-                house.name AS House
+                role.id,
+                role.title AS Title,
+                department.name AS Department
             FROM 
-                title
+                role
             LEFT JOIN 
-                house ON title.house_id = house.id
+                department ON role.department_id = department.id
             ORDER BY
-                title.id;
+                role.id;
             `
+        );
+    }
+
+    viewAllDepartments(){
+        return this.connection.query(
+        `
+        SELECT 
+	        id,
+	        name AS Departments 
+        FROM department;
+        `  
         );
     }
 
