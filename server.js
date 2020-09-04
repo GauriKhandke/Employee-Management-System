@@ -37,6 +37,16 @@ async function viewAllDepartments(){
 	mainPrompt();
 }
 
+async function viewEmployeesByDepartment(){
+	
+	const emp = await db.viewEmployeesByDepartment();
+
+    console.log("\n");
+    console.table(emp);
+	
+	mainPrompt();
+}
+
 async function mainPrompt() {
 
     const { menuAction } = await inquirer.prompt(prompts.mainPrompt);
@@ -54,6 +64,7 @@ async function mainPrompt() {
 			break;
 
 		case 'View all employees by department':
+			viewEmployeesByDepartment();
 			break;
 
 		case 'View all employees by manager':
