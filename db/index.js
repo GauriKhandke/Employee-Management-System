@@ -2,8 +2,6 @@
 
 const connection = require('./connection');
 
-// module.exports = new DB(connection);
-
 class DB{
     constructor(connection){
         this.connection = connection;
@@ -26,4 +24,15 @@ class DB{
             `
         );
     }
+
+    closeConnection(){
+        try{
+            this.connection.end();
+        }
+        catch(error){
+            console.log("Error closing connection : "+error);
+        }      
+    }
 }
+
+module.exports = new DB(connection);
