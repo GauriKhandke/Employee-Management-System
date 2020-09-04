@@ -6,39 +6,75 @@ const prompts = require("./prompts");
 const db = require("./db");
 require("console.table");
 
-async function viewAllTitles() {
-	const titles = await db.viewAllTitles();
 
-	console.log("\n");
-	console.table(titles);
+async function viewAllEmployees(){
+	
+	const empData = await db.viewAllEmployees();
 
+    console.log("\n");
+    console.table(empData);
+	
+	mainPrompt();
+}
+
+async function viewAllRoles(){
+	
+	const roles = await db.viewAllRoles();
+
+    console.log("\n");
+    console.table(roles);
+	
+	mainPrompt();
+}
+
+async function viewAllDepartments(){
+	
+	const departments = await db.viewAllDepartments();
+
+    console.log("\n");
+    console.table(departments);
+	
 	mainPrompt();
 }
 
 async function mainPrompt() {
-    
+
     const { menuAction } = await inquirer.prompt(prompts.mainPrompt);
-
 	switch (menuAction) {
-		case "View all employees":
+		case 'View all employees':
+            viewAllEmployees();
 			break;
 
-		case "View all employees by department":
+		case 'View all roles':
+			viewAllRoles();
 			break;
 
-		case "View all employees by manager":
+		case 'View all departments':
+			viewAllDepartments();
 			break;
 
-		case "Add Employee":
+		case 'View all employees by department':
 			break;
 
-		case "Remove Employee":
+		case 'View all employees by manager':
+			break;
+
+		case 'Add Employee':
+			break;
+
+		case 'Add Department':
+			break;
+
+		case 'Add Role':
 			break;
 
 		case "Update employee role":
 			break;
 
 		case "Update employee manager":
+			break;
+
+		case "Remove Employee":
 			break;
 
 		case "Exit":
@@ -48,4 +84,9 @@ async function mainPrompt() {
 	}
 }
 
-mainPrompt();
+function init(){
+	// add logo
+	mainPrompt();
+}
+
+init();
