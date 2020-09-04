@@ -1,9 +1,9 @@
 USE employee_DB;
 
-INSERT INTO departments(name)
+INSERT INTO department(name)
 VALUES ("Engineering"), ("Sales"), ("Finance"), ("Marketing"), ("Human Resource Management"), ("Legal");
 
-INSERT INTO roles(title, salary, department_id)
+INSERT INTO role(title, salary, department_id)
 VALUES ("Software Engineer", 80000, 1), 
 	("Web Developer", 65000, 1), 
 	("Technical Lead",75000,1),

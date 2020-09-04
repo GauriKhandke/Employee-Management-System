@@ -7,43 +7,46 @@ CREATE DATABASE employee_DB;
 USE employee_DB;
 
 -- Create table to hold departments information --
-CREATE TABLE departments(
-	department_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE department(
+	id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(30),
-    PRIMARY KEY(department_id)
+    PRIMARY KEY(id)
 );
 
 -- Create table to hold employee's roles information --
-CREATE TABLE roles(
-	role_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE role(
+	id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL, 
     salary DECIMAL,
     department_id INT,
-    FOREIGN KEY (department_id) REFERENCES departments(department_id)
+    CONSTRAINT fk_department FOREIGN KEY (department_id) 
+    REFERENCES department(id)
 		ON UPDATE CASCADE
         ON DELETE CASCADE,
-    PRIMARY KEY(role_id)
+    PRIMARY KEY(id)
 );
 
 
 -- Create table to hold employee information --
 CREATE TABLE employee(
-	employee_id INT NOT NULL AUTO_INCREMENT,
+	id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     role_id INT,
     manager_id INT,
-	FOREIGN KEY (role_id) REFERENCES roles(role_id) 
+	CONSTRAINT fk_role FOREIGN KEY (role_id) 
+    REFERENCES role(id) 
 		ON UPDATE CASCADE 
         ON DELETE CASCADE,
-    FOREIGN KEY (manager_id) REFERENCES employee(employee_id) 
+    CONSTRAINT fk_employee FOREIGN KEY (manager_id) 
+    REFERENCES employee(id) 
 		ON UPDATE CASCADE 
         ON DELETE CASCADE,
-    PRIMARY KEY (employee_id)
+    PRIMARY KEY (id)
 );
 
-SELECT * FROM roles;
+SELECT * FROM role;
 
-SELECT * FROM departments;
+SELECT * FROM department;
 
 SELECT * FROM employee;
