@@ -47,6 +47,24 @@ async function viewEmployeesByDepartment(){
 	mainPrompt();
 }
 
+async function getDepartments(){
+	
+	const departments = await db.getDepartments();
+
+    console.log("\n");
+    console.table(departments);
+	
+	mainPrompt();
+}
+
+async function addDepartment(){
+	const { deptName } = await inquirer.prompt(prompts.addDepartment);
+
+	const result = await db.addDepartment(deptName);
+
+	viewAllDepartments();
+}
+
 async function mainPrompt() {
 
     const { menuAction } = await inquirer.prompt(prompts.mainPrompt);
@@ -74,6 +92,7 @@ async function mainPrompt() {
 			break;
 
 		case 'Add Department':
+			addDepartment();
 			break;
 
 		case 'Add Role':
