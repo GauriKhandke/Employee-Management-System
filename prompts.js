@@ -19,5 +19,13 @@ module.exports = {
                 'Exit'
             ]
         }
-    ] 
+    ],
+
+    addDepartment : [
+        {
+            type : 'input',
+            name : 'deptName',
+            message : 'Which department would you like to add?'
+        }
+    ]
 };
