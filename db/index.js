@@ -76,6 +76,37 @@ class DB{
         );
     }
 
+    getDepartments(){
+        return this.connection.query(
+            `
+            SELECT 
+	            name AS Departments 
+            FROM department;
+            `
+        );
+    }
+
+    addDepartment(deptName){
+        try{
+             this.connection.query(
+                'INSERT INTO department SET ?',
+                {
+                    name: `${deptName}`,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(`\nSuccessfully added ${deptName} department!`);
+                    return res;
+                }
+            );
+        }
+        catch(err){
+            console.log("Error inserting department : "+ err );
+        }
+       
+
+    }
+
     closeConnection(){
         try{
             this.connection.end();
