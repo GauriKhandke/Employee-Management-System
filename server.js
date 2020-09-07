@@ -53,14 +53,14 @@ async function addEmployee(){
 	
 	let roleNames = [];
 	for (let i = 0; i < rolesResult.length; i++) {
-		roleNames.push(rolesResult[i].title)
+		roleNames.push(rolesResult[i].title);
 	}
 
 	const employeeResult = await db.getEmployees();
 	
 	let employeeNames = [];
 	for (let i = 0; i < employeeResult.length; i++) {
-		employeeNames.push(employeeResult[i].first_name+ " "+ employeeResult[i].last_name)
+		employeeNames.push(employeeResult[i].first_name+ " "+ employeeResult[i].last_name);
 	}
 
 	prompts.addEmployee.push({
@@ -122,6 +122,54 @@ async function addRole(){
 	viewAllRoles();
 }
 
+async function  updateEmployeeRole() {
+	
+	const rolesResult = await db.getRoles();
+	
+	let roleNames = [];
+	for (let i = 0; i < rolesResult.length; i++) {
+		roleNames.push(rolesResult[i].title);
+	}
+
+	const employeeResult = await db.getEmployees();
+	
+	let employeeNames = [];
+	for (let i = 0; i < employeeResult.length; i++) {
+		employeeNames.push(employeeResult[i].first_name+ " "+ employeeResult[i].last_name);
+	}
+
+	let updateEmpRole = [];
+
+	updateEmpRole.push({
+		type : 'list',
+		name : 'empName',
+		message : "Which employee's role to update?",
+		choices: employeeNames
+
+	});
+
+	updateEmpRole.push({
+		type : 'list',
+		name : 'roleName',
+		message : "Which role to update for current employee?",
+		choices: roleNames
+	});
+
+	const { empName, roleName } = await inquirer.prompt(updateEmpRole);
+
+	const empFirstName = empName.split(" ")[0];
+	const empLastName = empName.split(" ")[1];
+
+	const empId = employeeResult.filter(employee => employee.first_name === empFirstName && employee.last_name === empLastName)[0].id;
+
+	const roleId = rolesResult.filter(role => role.title === roleName)[0].id;
+
+	const updateRoleResult = await db.updateEmployeeRole(empId, roleId);
+
+	viewAllEmployees();
+
+}
+
 async function mainPrompt() {
 
     const { menuAction } = await inquirer.prompt(prompts.mainPrompt);
@@ -158,6 +206,7 @@ async function mainPrompt() {
 			break;
 
 		case "Update employee role":
+			updateEmployeeRole();
 			break;
 
 		case "Update employee manager":
