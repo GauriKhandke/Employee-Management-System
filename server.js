@@ -170,6 +170,66 @@ async function  updateEmployeeRole() {
 
 }
 
+async function updateEmployeeManager() {
+	
+	// Get all details from employee table
+	const employeeResult = await db.getEmployees();
+	
+	// Get only employee names from all details
+	let employeeNames = [];
+	for (let i = 0; i < employeeResult.length; i++) {
+		employeeNames.push(employeeResult[i].first_name+ " "+ employeeResult[i].last_name);
+	}
+
+	// array for inquirer prompt
+	let updateEmpManager = [];
+
+	// Get employee name whose manager to update from inquirer prompt
+	updateEmpManager.push({
+		type : 'list',
+		name : 'empName',
+		message : "Which employee's manager to update?",
+		choices: employeeNames
+
+	});
+
+	// Prompt user for employee name whose manager to update 
+	const { empName } = await inquirer.prompt(updateEmpManager);
+
+	// filter other employee names ,except whose manager to update
+	const empNames = employeeNames.filter(employee => employee !== empName);
+
+	// insert filtered employee's in array of inquirer prompt
+	updateEmpManager.push({
+		type : 'list',
+		name : 'managerName',
+		message : "Who is employee's new manager?",
+		choices: empNames
+	});
+
+	// Prompt user for new manager
+	const { managerName } = await inquirer.prompt(updateEmpManager[1]);
+
+	// Split Employee's name whose manager to update
+	const empFirstName = empName.split(" ")[0];
+	const empLastName = empName.split(" ")[1];
+
+	// split manager's Name
+	const managerFirstName = managerName.split(" ")[0];
+	const managerLastName = managerName.split(" ")[1];
+
+	// Get employee Id from employee name
+	const empId = employeeResult.filter(employee => employee.first_name === empFirstName && employee.last_name === empLastName)[0].id;
+
+	// Get manager Id from employee names
+	const managerId = employeeResult.filter(employee => employee.first_name === managerFirstName && employee.last_name === managerLastName)[0].id;
+
+	// update databse for managerId of employee in employee table
+	const updatemanagerResult = await db.updateEmployeeManager(empId, managerId);
+
+	viewAllEmployees();
+}
+
 async function mainPrompt() {
 
     const { menuAction } = await inquirer.prompt(prompts.mainPrompt);
@@ -210,6 +270,7 @@ async function mainPrompt() {
 			break;
 
 		case "Update employee manager":
+			updateEmployeeManager();
 			break;
 
 		case "Remove Employee":
