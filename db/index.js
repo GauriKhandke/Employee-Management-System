@@ -10,20 +10,23 @@ class DB {
 	viewAllEmployees() {
 		return this.connection.query(
 			`
-        SELECT 
-            employee.id AS id,
-            employee.first_name AS FirstName,
-            employee.last_name AS LastName,
-            role.title AS Title,
-            department.name AS Department,
-            role.salary AS Salary
-        FROM
-            ((employee
-        INNER JOIN role 
-            ON employee.role_id = role.id) 
-        INNER JOIN department 
-            ON role.department_id = department.id)
-        ORDER BY employee.id;
+            SELECT
+                e1.id AS ID,
+                e1.first_name AS First_Name,
+                e1.last_name AS Last_Name,
+                role.title AS Role,
+                department.name AS Department,
+                CONCAT(e2.first_name, ' ', e2.last_name) AS Manager,
+                role.salary AS Salary
+            FROM
+                employee e1
+            LEFT JOIN
+                role ON e1.role_id = role.id
+            LEFT JOIN
+                employee e2 ON e1.manager_id = e2.id
+		    LEFT JOIN department ON role.department_id = department.id
+		    ORDER BY
+                e1.id;
         `
 		);
 	}
