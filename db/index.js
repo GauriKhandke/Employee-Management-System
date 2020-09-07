@@ -210,7 +210,7 @@ class DB {
 		//UPDATE employee SET manager_id = 2 WHERE id = 3;
 		try {
 			this.connection.query(
-				"UPDATE employee SET ? Where ?",
+				"UPDATE employee SET ? WHERE ?",
 				[
 					{
 						manager_id: managerId,
@@ -221,13 +221,33 @@ class DB {
 				],
 				function (error) {
 					if (error) throw error;
-					console.log("\nUpdated employee's manager successfully!");
+					console.log(`\nUpdated employee's manager successfully!`);
 				}
 			);
 		} catch (error) {
 			if (error) throw error;
 		}
-	}
+    }
+    
+    removeEmployee(empId){
+        // DELETE FROM employee WHERE id = 2;
+        try {
+			this.connection.query(
+				"DELETE FROM employee WHERE ?",
+				[
+					{
+						id: empId,
+					}
+				],
+				function (error) {
+					if (error) throw error;
+					console.log(`\nRemoved employee with id : ${empId} successfully!`);
+				}
+			);
+		} catch (error) {
+			if (error) throw error;
+		}
+    }
 
 	closeConnection() {
 		try {
