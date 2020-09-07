@@ -230,6 +230,44 @@ async function updateEmployeeManager() {
 	viewAllEmployees();
 }
 
+async function removeEmployee(){
+
+	// Get all details from employee table
+	const employeeResult = await db.getEmployees();
+	
+	// Get only employee names from all details
+	let employeeNames = [];
+	for (let i = 0; i < employeeResult.length; i++) {
+		employeeNames.push(employeeResult[i].first_name+ " "+ employeeResult[i].last_name);
+	}
+
+	// array for inquirer prompt
+	let removeEmpPrompt = [];
+
+	// Get employee name to remove
+	removeEmpPrompt.push({
+		type : 'list',
+		name : 'empName',
+		message : "Which employee to remove?",
+		choices: employeeNames
+	});
+
+	// Prompt user for employee name to remove
+	const { empName } = await inquirer.prompt(removeEmpPrompt);
+
+	// Split Employee's name
+	const empFirstName = empName.split(" ")[0];
+	const empLastName = empName.split(" ")[1];
+
+	// Get employee Id from employee name
+	const empId = employeeResult.filter(employee => employee.first_name === empFirstName && employee.last_name === empLastName)[0].id;
+
+	// update database
+	const removeEmployeeResult = await db.removeEmployee(empId);
+
+	viewAllEmployees();
+}
+
 async function mainPrompt() {
 
     const { menuAction } = await inquirer.prompt(prompts.mainPrompt);
@@ -274,6 +312,7 @@ async function mainPrompt() {
 			break;
 
 		case "Remove Employee":
+			removeEmployee();
 			break;
 
 		case "Exit":
