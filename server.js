@@ -17,6 +17,16 @@ async function viewAllEmployees(){
 	mainPrompt();
 }
 
+async function viewAllEmployeesByManager() {
+	
+	const empData = await db.viewAllEmployeesByManager();
+
+    console.log("\n");
+    console.table(empData);
+	
+	mainPrompt();
+}
+
 async function viewAllRoles(){
 	
 	const roles = await db.viewAllRoles();
@@ -289,6 +299,7 @@ async function mainPrompt() {
 			break;
 
 		case 'View all employees by manager':
+			viewAllEmployeesByManager();
 			break;
 
 		case 'Add Employee':
