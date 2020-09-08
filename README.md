@@ -30,7 +30,7 @@ So that I can organize and plan my business
 
 # Demo : 
 
-# Screenshots :  
+![Demo](./images/Employee-Management-System.gif)
 
 # Database Schema : 
 
