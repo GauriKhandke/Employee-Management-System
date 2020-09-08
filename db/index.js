@@ -1,12 +1,16 @@
 "use strict";
 
+// Get database connection
 const connection = require("./connection");
 
 class DB {
+
+    // constructor to initialise connection
 	constructor(connection) {
 		this.connection = connection;
 	}
 
+    // View all employees and all employees details by joining employee, role and department tables.
 	viewAllEmployees() {
 		return this.connection.query(
 			`
@@ -31,6 +35,7 @@ class DB {
 		);
     }
     
+    // View all employees by manager and all employees details by joining employee, role and department tables.
     viewAllEmployeesByManager(){
         return this.connection.query(
             `
@@ -55,6 +60,7 @@ class DB {
         );
     }
 
+    // View all roles and role's department by joining role and department table
 	viewAllRoles() {
 		return this.connection.query(
 			`
@@ -72,6 +78,7 @@ class DB {
 		);
 	}
 
+    // View all departments
 	viewAllDepartments() {
 		return this.connection.query(
 			`
@@ -83,6 +90,7 @@ class DB {
 		);
 	}
 
+    // // View all employees by department and all employees details by joining employee, role and department tables.
 	viewEmployeesByDepartment() {
 		return this.connection.query(
             `
@@ -107,6 +115,7 @@ class DB {
 		);
 	}
 
+    // Get all departments
 	getDepartments() {
 		try {
 			return this.connection.query(
@@ -121,6 +130,7 @@ class DB {
 		}
 	}
 
+    // Get all roles
 	getRoles() {
 		try {
 			return this.connection.query(
@@ -135,6 +145,7 @@ class DB {
 		}
 	}
 
+    // Get all employees
 	getEmployees() {
 		try {
 			return this.connection.query(
@@ -149,6 +160,7 @@ class DB {
 		}
 	}
 
+    // Add Role in role table
 	addRole(title, salary, departnemtId) {
 		try {
 			this.connection.query(
@@ -171,6 +183,7 @@ class DB {
 		}
 	}
 
+    // Add employee in employee table
 	addEmployee(firstName, lastName, roleId, managerId) {
 		try {
 			this.connection.query(
@@ -194,6 +207,7 @@ class DB {
 		}
 	}
 
+    // Add department in department table
 	addDepartment(deptName) {
 		try {
 			this.connection.query(
@@ -214,6 +228,7 @@ class DB {
 		}
 	}
 
+    // Update employee role
 	updateEmployeeRole(empId, roleId) {
 		try {
 			// UPDATE employee SET role_id = 4 WHERE id = 4;
@@ -237,6 +252,7 @@ class DB {
 		}
 	}
 
+    // Update employee manager
 	updateEmployeeManager(empId, managerId) {
 		//UPDATE employee SET manager_id = 2 WHERE id = 3;
 		try {
@@ -260,6 +276,7 @@ class DB {
 		}
     }
     
+    // Remove employee
     removeEmployee(empId){
         // DELETE FROM employee WHERE id = 2;
         try {
@@ -280,6 +297,7 @@ class DB {
 		}
     }
 
+    // Close database connection
 	closeConnection() {
 		try {
 			this.connection.end();
@@ -289,4 +307,5 @@ class DB {
 	}
 }
 
+// Create object of DB class and Export that object
 module.exports = new DB(connection);
