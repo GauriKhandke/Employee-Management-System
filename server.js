@@ -368,7 +368,22 @@ async function mainPrompt() {
 }
 
 function init() {
-	// add logo
+
+	//logo
+	console.log(
+		logo({
+			name: 'Employee Management System',
+			font: 'Standard',
+			lineChars: 10,
+			padding: 3,
+			margin: 4,
+			borderColor: 'bold-white',
+			logoColor: 'bold-cyan',
+		})
+		.emptyLine()
+		.render()
+	);
+
 	mainPrompt();
 }
 
