@@ -3,6 +3,7 @@
 const util = require('util');
 const mysql = require('mysql');
 
+// Create database connection
 const connection = mysql.createConnection({
     host : 'localhost',
 
@@ -16,6 +17,7 @@ const connection = mysql.createConnection({
     database : 'employee_DB'
 });
 
+// Connect to databse
 connection.connect(function(err){
     if(err) throw err;
 });
@@ -24,4 +26,5 @@ connection.connect(function(err){
 // This allows us to use async/await syntax
 connection.query = util.promisify(connection.query);
 
+// Export connection
 module.exports = connection;

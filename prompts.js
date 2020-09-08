@@ -1,4 +1,5 @@
 module.exports = {
+    // Inquirer questions for mainprompt
     mainPrompt : [
         {
             type : 'rawlist',
@@ -21,6 +22,7 @@ module.exports = {
         }
     ],
 
+    // Questions for add department
     addDepartment : [
         {
             type : 'input',
@@ -30,6 +32,7 @@ module.exports = {
     ]
     ,
 
+    // Questions for add role
     addRole : [
         {
             type : 'input',
@@ -44,6 +47,7 @@ module.exports = {
     ]
     ,
     
+    // Questions for add employee
     addEmployee: [
         {
             type: 'input',
