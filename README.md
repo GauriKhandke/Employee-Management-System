@@ -2,9 +2,9 @@
 
 ![MIT License](https://img.shields.io/badge/license-MIT-green)
 
-# Goal :
+# Description :
 
-Architect and build a solution for managing a company's employees using node, inquirer, and MySQL.
+This application is built for manager for managing company's employees. Manager can view and manage the departments, roles, and employees. This application is created with node, inquirer, and MySQL.
 
 # Motivation : 
 
